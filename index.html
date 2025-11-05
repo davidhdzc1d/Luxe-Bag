@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxe Bag | Bolsos de Lujo Exclusivos</title>
+  <meta name="description" content="Explora nuestra colección exclusiva de bolsos de lujo. Elegancia, calidad y estilo en cada diseño.">
+  
+  <!-- Open Graph / SEO -->
+  <meta property="og:title" content="Luxe Bag - Bolsos Exclusivos">
+  <meta property="og:description" content="La llave dorada a tu estilo impecable.">
+  <meta property="og:image" content="/assets/bolso1.jpg">
+  <meta property="og:url" content="https://tudominio.com">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <h1>Luxe Bag</h1>
+  <p>Explora nuestra colección exclusiva</p>
+
+  <div class="social-container">
+    <div class="social-links">
+      <a href="https://www.facebook.com/share/1AmUwFTcSL/" title="Facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.instagram.com/gadeal.bolsos_mx?igsh=bG5haWg2MnFreW11" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@nynbolsosmx?_t=ZS-907LBRsD4wW&_r=1" title="TikTok"><i class="fab fa-tiktok"></i></a>
+    </div>
+    
+    <div class="whatsapp">
+      <a href="https://wa.me/522381724077" target="_blank" rel="noopener" 
+         style="display:flex;align-items:center;gap:8px;color:#fff;text-decoration:none;">
+        <i class="fab fa-whatsapp"></i>
+        <span>Contáctanos</span>
+      </a>
+    </div>
+  </div>
+  <!-- BOTÓN TOGGLE MODO OSCURO -->
+<button id="toggle-dark-mode" class="dark-mode-toggle" title="Cambiar a modo oscuro">
+  <i class="fas fa-moon"></i>
+  <i class="fas fa-sun"></i>
+</button>
+
+
+</header>
+
+<!-- HERO -->
+<div class="hero-section">
+  <div class="hero-carousel" id="heroCarousel">
+    <button class="carousel-control prev" onclick="moverHero(-1)">❮</button>
+    <button class="carousel-control next" onclick="moverHero(1)">❯</button>
+    <div class="carousel-inner" id="carouselInner"></div>
+    <div class="carousel-indicators" id="indicators"></div>
+  </div>
+
+  <div class="hero-text">
+    <h2>Metáfora:</h2>
+    <p class="metafora">“Un Luxe Bag no es un bolso… es la <strong>llave dorada</strong> que abre la puerta a tu versión más impecable.”</p>
+    <p class="explicacion"><em>Como una llave de lujo que solo encaja en la cerradura de tu estilo, cada Luxe Bag transforma lo cotidiano en extraordinario.</em></p>
+  </div>
+</div>
+
+<!-- FILTROS -->
+<div class="filters-container">
+  <button class="filter-btn active" data-filter="all">Todos</button>
+  <button class="filter-btn" data-filter="elegante">Elegante</button>
+  <button class="filter-btn" data-filter="moderno">Moderno</button>
+  <button class="filter-btn" data-filter="casual">Casual</button>
+</div>
+
+<!-- DESTACADOS -->
+<div class="section-title">Destacados</div>
+<div class="container destacados" id="destacados-container">
+  <!-- JS genera aquí -->
+</div>
+
+<!-- CATÁLOGO -->
+<div class="section-title">Catálogo Completo</div>
+<div class="container" id="productos-container">
+  <!-- JS genera aquí -->
+</div>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModal()">&times;</span>
+    <div class="carousel">
+      <button class="carousel-btn left" onclick="moverCarrusel(-1)">&#10094;</button>
+      <div class="carousel-track" id="carousel-track"></div>
+      <button class="carousel-btn right" onclick="moverCarrusel(1)">&#10095;</button>
+    </div>
+    <h2 id="modal-titulo"></h2>
+    <p id="modal-descripcion"></p>
+    <p id="modal-precio" class="price"></p>
+  </div>
+</div>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/522381724077?text=¡Hola!%20Vi%20tu%20catálogo%20en%20Luxe%20Bag%20y%20quiero%20más%20info" 
+   class="whatsapp-float" target="_blank" rel="noopener">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<footer>
+  &copy; 2025 Luxe Bag. Todos los derechos reservados.
+</footer>
+
+<script>
+
+
+      // ========== TOGGLE MODO OSCURO ==========
+  const toggleButton = document.getElementById('toggle-dark-mode');
+  const moonIcon = toggleButton.querySelector('.fa-moon');
+  const sunIcon = toggleButton.querySelector('.fa-sun');
+
+  toggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    if (document.body.classList.contains('dark-mode')) {
+      localStorage.setItem('theme', 'dark');
+      moonIcon.style.display = 'none';
+      sunIcon.style.display = 'inline';
+    } else {
+      localStorage.setItem('theme', 'light');
+      moonIcon.style.display = 'inline';
+      sunIcon.style.display = 'none';
+    }
+  });
+
+  // Cargar tema guardado
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    moonIcon.style.display = 'none';
+    sunIcon.style.display = 'inline';
+  } else {
+    moonIcon.style.display = 'inline';
+    sunIcon.style.display = 'none';
+  }
+
+
+
+
+
+  // ========== DATOS DE PRODUCTOS (BASE ORIGINAL + PRECIOS EN MXN) ==========
+  const productos = [
+    { img: ['/assets/bolso1.jpg','/assets/bolso1(2).jpg','/assets/bolso1(3).jpg'], titulo: 'Bolso Elegante', desc: 'Bolso de cuero con diseño clásico', precio: '$1,899', cat: 'elegante' },
+    { img: ['/assets/bolso2.jpg','/assets/bolso2(2).jpg'], titulo: 'Bolso Moderno', desc: 'Estilo contemporáneo y colores vivos', precio: '$1,299', cat: 'moderno' },
+    { img: ['/assets/bolso3.jpg','/assets/bolso3(2).jpg'], titulo: 'Bolso Casual', desc: 'Perfecto para uso diario', precio: '$699', cat: 'casual' },
+  ];
+
+  // Generar 36 productos (MISMA LÓGICA DE IMÁGENES QUE EL ORIGINAL)
+  for (let i = 4; i <= 36; i++) {
+    const cat = i <= 5 ? 'elegante' : i <= 10 ? 'moderno' : 'casual';
+    
+    // === IMÁGENES (100% IGUAL AL ORIGINAL) ===
+    const imgs = [`/assets/bolso${i}.jpg`];
+    if (i !== 8 && i !== 9 && i !== 10 && i !== 11 && i !== 12 && i !== 13 && i !== 14 && i !== 15 && i !== 17 && i !== 18 && i !== 19 && i !== 20 && i !== 21 && i !== 22 && i !== 23 && i !== 24 && i !== 25 && i !== 26 && i !== 27 && i !== 28 && i !== 30 && i !== 31 && i !== 32 && i !== 33 && i !== 34 && i !== 35 && i !== 36) {
+      imgs.push(`/assets/bolso${i}(2).jpg`);
+    }
+    if (i === 29) imgs[1] = '/assets/bolso29(2).jpg'; // FIX 404
+
+    // === PRECIOS VARIADOS EN MXN ===
+    let precio;
+    if (cat === 'elegante') {
+      const precios = [1899, 1799, 1699, 1599, 1499, 1399];
+      precio = precios[(i - 1) % precios.length];
+    } else if (cat === 'moderno') {
+      const precios = [1299, 1199, 1099, 999, 899, 799];
+      precio = precios[(i - 1) % precios.length];
+    } else {
+      const precios = [699, 649, 599, 749, 849, 949, 799];
+      precio = precios[(i - 1) % precios.length];
+    }
+
+    // === TÍTULOS (IGUAL AL ORIGINAL, CON VARIACIONES LIGERAS) ===
+    const titulo = i <= 3 ? ['Bolso Elegante','Bolso Moderno','Bolso Casual'][i-1] : 'Bolso ' + cat.charAt(0).toUpperCase() + cat.slice(1);
+
+    productos.push({
+      img: imgs,
+      titulo: titulo,
+      desc: 'Perfecto para uso diario',
+      precio: `$${precio}`,
+      cat: cat
+    });
+  }
+
+  // ========== DESTACADOS (3 PREMIUM) ==========
+  const destacadosContainer = document.getElementById('destacados-container');
+  [productos[0], productos[1], productos[2]].forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card destacado';
+    card.dataset.category = p.cat;
+    card.onclick = () => abrirModal(p.img, p.titulo, p.desc, p.precio);
+    card.innerHTML = `
+      <img src="${p.img[0]}" alt="${p.titulo}" loading="lazy">
+      <div class="card-body">
+        <h2>${p.titulo}</h2>
+        <p>${p.desc}</p>
+        <div class="price">${p.precio}</div>
+      </div>
+    `;
+    destacadosContainer.appendChild(card);
+  });
+
+  // ========== RENDER CATÁLOGO ==========
+  const container = document.getElementById('productos-container');
+  productos.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.category = p.cat;
+    card.onclick = () => abrirModal(p.img, p.titulo, p.desc, p.precio);
+    card.innerHTML = `
+      <img src="${p.img[0]}" alt="${p.titulo}" loading="lazy">
+      <div class="card-body">
+        <h2>${p.titulo}</h2>
+        <p>${p.desc}</p>
+        <div class="price">${p.precio}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+
+  // ========== FILTROS ==========
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.container .card').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
+      });
+    });
+  });
+
+  // ========== CARRUSEL HERO ==========
+  const imagenesHero = Array.from({length: 36}, (_, i) => `/assets/bolso${i + 1}.jpg`);
+  let indiceHero = 0;
+  let intervaloHero;
+  const carouselInner = document.getElementById('carouselInner');
+  const indicatorsContainer = document.getElementById('indicators');
+
+  imagenesHero.forEach((src, i) => {
+    const item = document.createElement('div');
+    item.className = 'carousel-item';
+    if (i === 0) item.classList.add('active');
+    item.innerHTML = `<img src="${src}" alt="Bolso ${i+1}" loading="lazy"><div class="carousel-caption">Bolso ${i+1}</div>`;
+    carouselInner.appendChild(item);
+
+    const dot = document.createElement('span');
+    dot.onclick = () => irAIndice(i);
+    if (i === 0) dot.classList.add('active');
+    indicatorsContainer.appendChild(dot);
+  });
+
+  const items = document.querySelectorAll('.carousel-item');
+  const indicators = document.querySelectorAll('#indicators span');
+
+  function actualizarCarrusel() {
+    items.forEach((it, i) => it.classList.toggle('active', i === indiceHero));
+    indicators.forEach((d, i) => d.classList.toggle('active', i === indiceHero));
+  }
+
+  function moverHero(dir) {
+    indiceHero = (indiceHero + dir + imagenesHero.length) % imagenesHero.length;
+    actualizarCarrusel();
+    reiniciarIntervalo();
+  }
+
+  function irAIndice(n) { indiceHero = n; actualizarCarrusel(); reiniciarIntervalo(); }
+
+  function iniciarIntervalo() {
+    intervaloHero = setInterval(() => { indiceHero = (indiceHero + 1) % imagenesHero.length; actualizarCarrusel(); }, 2000);
+  }
+
+  function reiniciarIntervalo() { clearInterval(intervaloHero); iniciarIntervalo(); }
+
+  document.getElementById('heroCarousel').addEventListener('mouseenter', () => clearInterval(intervaloHero));
+  document.getElementById('heroCarousel').addEventListener('mouseleave', iniciarIntervalo);
+  iniciarIntervalo();
+
+  // ========== MODAL ==========
+  let imagenesCarrusel = [], indiceActual = 0;
+  const numeroWhatsApp = "522381724077";
+
+  function abrirModal(imagenes, titulo, descripcion, precio) {
+    imagenesCarrusel = imagenes;
+    indiceActual = 0;
+    const track = document.getElementById('carousel-track');
+    track.innerHTML = imagenes.map(src => `<img src="${src}" loading="lazy">`).join('');
+    track.style.transform = 'translateX(0)';
+    document.getElementById('modal-titulo').innerText = titulo;
+    document.getElementById('modal-descripcion').innerText = descripcion;
+    document.getElementById('modal-precio').innerHTML = `
+      <div class="price">${precio}</div>
+      <a href="https://wa.me/${numeroWhatsApp}?text=¡Hola!%20Quiero%20el%20*${encodeURIComponent(titulo)}*%20por%20${precio}%20%0A%0A¡Me%20lo%20apartas!%20" 
+         class="btn-whatsapp" target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i> <span>Enviar WhatsApp</span>
+      </a>
+    `;
+    document.getElementById('modal').style.display = 'block';
+  }
+
+  function cerrarModal() { document.getElementById('modal').style.display = 'none'; }
+
+  function moverCarrusel(dir) {
+    indiceActual = (indiceActual + dir + imagenesCarrusel.length) % imagenesCarrusel.length;
+    document.getElementById('carousel-track').style.transform = `translateX(-${indiceActual * 100}%)`;
+  }
+
+  window.onclick = e => { if (e.target === document.getElementById('modal')) cerrarModal(); }
+</script>
+
+</body>
+</html>
