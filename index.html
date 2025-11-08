@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Luxe Bag | Bolsos de Lujo Exclusivos</title>
+  <meta name="description" content="Explora nuestra colección exclusiva de bolsos de lujo. Elegancia, calidad y estilo en cada diseño.">
+  
+  <!-- Open Graph / SEO -->
+  <meta property="og:title" content="Luxe Bag - Bolsos Exclusivos">
+  <meta property="og:description" content="La llave dorada a tu estilo impcable.">
+  <meta property="og:image" content="/assets/bolso1.jpg">
+  <meta property="og:url" content="https://luxe-bag.vercel.app">
+  <meta property="og:type" content="website">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-container">
+    <a href="#" class="logo-link">
+      <img src="/assets/logo.png" alt="Luxe Bag - Bolsos de Lujo" class="logo">
+    </a>
+    <div class="header-center">
+      <h1 class="title-glow">Luxe Bag</h1>
+      <p class="subtitle-fade">Explora nuestra colección exclusiva</p>
+    </div>
+    <div class="header-right">
+      <div class="social-container">
+        <div class="social-links">
+          <a href="https://www.facebook.com/share/1AmUwFTcSL/" title="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/gadeal.bolsos_mx?igsh=bG5haWg2MnFreW11" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@nynbolsmx?_t=ZS-907LBRsD4wW&_r=1" title="TikTok"><i class="fab fa-tiktok"></i></a>
+        </div>
+        <div class="whatsapp">
+          <a href="https://wa.me/522381724077" target="_blank" rel="noopener">
+            <i class="fab fa-whatsapp"></i>
+            <span>Contáctanos</span>
+          </a>
+        </div>
+      </div>
+      <button id="toggle-dark-mode" class="dark-mode-toggle" title="Cambiar a modo oscuro">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- HERO RESPONSIVE MEJORADO -->
+<div class="hero-section">
+  <div class="hero-carousel" id="heroCarousel">
+    <!-- Contenedor para imágenes -->
+    <div class="carousel-inner" id="carouselInner"></div>
+    
+    <!-- Flechas (ocultas en móvil) -->
+    <button class="carousel-control prev" onclick="moverHero(-1)">&#10094;</button>
+    <button class="carousel-control next" onclick="moverHero(1)">&#10095;</button>
+    
+    <!-- Indicadores -->
+    <div class="carousel-indicators" id="indicators"></div>
+  </div>
+
+  <!-- Texto overlay -->
+  <div class="hero-text">
+    <h2>Metáfora:</h2>
+    <p class="metafora">“Un Luxe Bag no es un bolso… es la <strong>llave dorada</strong> que abre la puerta a tu versión más impecable.”</p>
+    <p class="explicacion"><em>Como una llave de lujo que solo encaja en la cerradura de tu estilo, cada Luxe Bag transforma lo cotidiano en extraordinario.</em></p>
+  </div>
+</div>
+
+<!-- FILTROS -->
+<div class="filters-container">
+  <button class="filter-btn active" data-filter="all">Todos</button>
+  <button class="filter-btn" data-filter="elegante">Elegante</button>
+  <button class="filter-btn" data-filter="moderno">Moderno</button>
+  <button class="filter-btn" data-filter="casual">Casual</button>
+</div>
+
+<!-- DESTACADOS -->
+<div class="section-title">Destacados</div>
+<div class="container destacados" id="destacados-container"></div>
+
+<!-- CATÁLOGO -->
+<div class="section-title">Catálogo Completo</div>
+<div class="container" id="productos-container"></div>
+
+<!-- MODAL CON CHECKOUT FALSO MEJORADO -->
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="cerrarModal()">×</span>
+
+    <!-- CARRUSEL -->
+    <div class="carousel">
+      <button class="carousel-btn left" onclick="moverCarrusel(-1)">&#10094;</button>
+      <div class="carousel-track" id="carousel-track"></div>
+      <button class="carousel-btn right" onclick="moverCarrusel(1)">&#10095;</button>
+    </div>
+
+    <!-- INFO PRODUCTO -->
+    <h2 id="modal-titulo"></h2>
+    <p id="modal-descripcion"></p>
+    <div id="modal-precio" class="price"></div>
+
+    <!-- BOTONES DE ACCIÓN -->
+    <div class="modal-actions" id="modalActions"></div>
+
+    <!-- CHECKOUT FALSO -->
+    <div id="checkoutForm" class="checkout-form" style="display:none;">
+      <h3>Realizar Pedido</h3>
+      
+      <div class="form-group">
+        <label>Nombre completo</label>
+        <input type="text" id="nombreCliente" placeholder="Juan Pérez" maxlength="50" required>
+      </div>
+
+      <div class="form-group">
+        <label>Teléfono</label>
+        <input type="tel" id="telefonoCliente" placeholder="55 1234 5678" maxlength="15" required>
+      </div>
+
+      <div class="form-group">
+        <label>Dirección de envío</label>
+        <input type="text" id="direccionCliente" placeholder="Calle 123, Col. Centro, CDMX" maxlength="100" required>
+      </div>
+
+      <div class="form-group">
+        <label>Número de tarjeta</label>
+        <input type="text" id="tarjetaNumero" placeholder="1234 5678 9012 3456" maxlength="19" required>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha de vencimiento</label>
+          <div class="input-with-slash">
+            <input type="text" id="tarjetaMes" placeholder="MM" maxlength="2" required>
+            <span>/</span>
+            <input type="text" id="tarjetaAnio" placeholder="AA" maxlength="2" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>CVV</label>
+          <input type="text" id="tarjetaCVV" placeholder="123" maxlength="3" required>
+        </div>
+      </div>
+
+      <button class="btn-pagar-falso" onclick="procesarPagoFalso()">
+        Lock Realizar Pedido
+      </button>
+
+      <button class="btn-volver" onclick="volverAlModal()">
+        Previous Volver al producto
+      </button>
+    </div>
+
+    <!-- CONFIRMACIÓN -->
+    <div id="confirmacionPedido" class="confirmacion-pedido" style="display:none;">
+      <i class="fas fa-check-circle confirm-icon"></i>
+      <h3>¡Pedido Confirmado!</h3>
+      <p>Tu pedido ha sido enviado a WhatsApp.</p>
+      <p><strong>Te contactaremos en breve.</strong></p>
+      <button class="btn-cerrar-confirm" onclick="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- CARRITO FLOTANTE -->
+<div class="cart-float" id="cartFloat">
+  <i class="fas fa-shopping-bag"></i>
+  <span class="cart-count" id="cartCount">0</span>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastText">¡Agregado al carrito!</span>
+</div>
+
+<!-- REDES FLOTANTES -->
+
+<a href="https://wa.me/522381724077?text=¡Hola!%20Vi%20tu%20catálogo%20en%20Luxe%20Bag%20y%20quiero%20más%20info" class="whatsapp-float" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i></a>
+
+<a href="https://www.instagram.com/gadeal.bolsos_mx?igsh=bG5haWg2MnFreW11" class="instagram-float" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+<a href="https://www.tiktok.com/@nynbolsmx?_t=ZS-907LBRsD4wW&_r=1" class="tiktok-float" target="_blank" rel="noopener"><i class="fab fa-tiktok"></i></a>
+
+<footer>&copy; 2025 Luxe Bag. Todos los derechos reservados.</footer>
+
+<script>
+  // ========== TOGGLE MODO OSCURO ==========
+  const toggleButton = document.getElementById('toggle-dark-mode');
+  const moonIcon = toggleButton.querySelector('.fa-moon');
+  const sunIcon = toggleButton.querySelector('.fa-sun');
+  toggleButton.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDark = document.body.classList.contains('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    moonIcon.style.display = isDark ? 'none' : 'inline';
+    sunIcon.style.display = isDark ? 'inline' : 'none';
+  });
+  if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark-mode');
+    moonIcon.style.display = 'none';
+    sunIcon.style.display = 'inline';
+  } else {
+    moonIcon.style.display = 'inline';
+    sunIcon.style.display = 'none';
+  }
+
+  // ========== CARRITO ==========
+  let carrito = [];
+  const numeroWhatsApp = "522381724077";
+
+  // ========== PRODUCTOS ==========
+  const productos = [
+    { img: ['/assets/bolso1.jpg','/assets/bolso1(2).jpg','/assets/bolso1(3).jpg'], titulo: 'Bolso Elegante', desc: 'Bolso de cuero con diseño clásico', precio: '$1,899', k: 'elegante' },
+    { img: ['/assets/bolso2.jpg','/assets/bolso2(2).jpg'], titulo: 'Bolso Moderno', desc: 'Estilo contemporáneo y colores vivos', precio: '$1,299', k: 'moderno' },
+    { img: ['/assets/bolso3.jpg','/assets/bolso3(2).jpg'], titulo: 'Bolso Casual', desc: 'Perfecto para uso diario', precio: '$699', k: 'casual' },
+  ];
+  for (let i = 4; i <= 36; i++) {
+    const cat = i <= 5 ? 'elegante' : i <= 10 ? 'moderno' : 'casual';
+    const imgs = [`/assets/bolso${i}.jpg`];
+    if (![8,9,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,30,31,32,33,34,35,36].includes(i)) {
+      imgs.push(`/assets/bolso${i}(2).jpg`);
+    }
+    if (i === 29) imgs[1] = '/assets/bolso29(2).jpg';
+    const precios = cat === 'elegante' ? [1899,1799,1699,1599,1499,1399] :
+                    cat === 'moderno' ? [1299,1199,1099,999,899,799] :
+                    [699,649,599,749,849,949,799];
+    const precio = precios[(i-1) % precios.length];
+    const titulo = i <= 3 ? ['Bolso Elegante','Bolso Moderno','Bolso Casual'][i-1] : 'Bolso ' + cat.charAt(0).toUpperCase() + cat.slice(1);
+    productos.push({ img: imgs, titulo, desc: 'Perfecto para uso diario', precio: `$${precio}`, k: cat });
+  }
+
+  // ========== DESTACADOS & CATÁLOGO ==========
+  const destacadosContainer = document.getElementById('destacados-container');
+  [0,1,2,3].forEach(i => {
+    const p = productos[i];
+    const card = document.createElement('div');
+    card.className = 'card destacado';
+    card.dataset.category = p.k;
+    card.onclick = () => abrirModal(p.img, p.titulo, p.desc, p.precio);
+    card.innerHTML = `<div class="badge">Destacado</div><img src="${p.img[0]}" loading="lazy"><div class="card-body"><h2>${p.titulo}</h2><p>${p.desc}</p><div class="price">${p.precio}</div></div>`;
+    destacadosContainer.appendChild(card);
+  });
+
+  const container = document.getElementById('productos-container');
+  productos.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.category = p.k;
+    card.onclick = () => abrirModal(p.img, p.titulo, p.desc, p.precio);
+    card.innerHTML = `<img src="${p.img[0]}" loading="lazy"><div class="card-body"><h2>${p.titulo}</h2><p>${p.desc}</p><div class="price">${p.precio}</div></div>`;
+    container.appendChild(card);
+  });
+
+  // ========== FILTROS ==========
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.container .card').forEach(card => {
+        card.style.display = (filter === 'all' || card.dataset.category === filter) ? 'block' : 'none';
+      });
+    });
+  });
+
+  // ========== CARRUSEL HERO RESPONSIVE + TOUCH ==========
+  const imagenesHero = Array.from({length: 36}, (_, i) => `/assets/bolso${i + 1}.jpg`);
+  let indiceHero = 0;
+  let intervaloHero;
+  const carouselInner = document.getElementById('carouselInner');
+  const indicatorsContainer = document.getElementById('indicators');
+
+  const esMovil = window.innerWidth <= 768;
+
+  imagenesHero.forEach((src, i) => {
+    const item = document.createElement('div');
+    item.className = 'carousel-item';
+    if (i === 0) item.classList.add('active');
+    item.innerHTML = `<img src="${src}" alt="Bolso ${i+1}" loading="lazy"><div class="carousel-caption">Bolso ${i+1}</div>`;
+    carouselInner.appendChild(item);
+
+    const dot = document.createElement('span');
+    dot.onclick = () => irAIndice(i);
+    if (i === 0) dot.classList.add('active');
+    indicatorsContainer.appendChild(dot);
+  });
+
+  const items = document.querySelectorAll('.carousel-item');
+  const indicators = document.querySelectorAll('#indicators span');
+
+  function actualizarCarrusel() {
+    if (!esMovil) {
+      const offset = -indiceHero * (items[0].offsetWidth + 16);
+      carouselInner.style.transform = `translateX(${offset}px)`;
+    } else {
+      const scrollLeft = indiceHero * (items[0].offsetWidth + 16);
+      document.getElementById('heroCarousel').scrollLeft = scrollLeft;
+    }
+    indicators.forEach((d, i) => d.classList.toggle('active', i === indiceHero));
+  }
+
+  function moverHero(dir) {
+    indiceHero = Math.max(0, Math.min(imagenesHero.length - 1, indiceHero + dir));
+    actualizarCarrusel();
+    reiniciarIntervalo();
+  }
+
+  function irAIndice(n) {
+    indiceHero = n;
+    actualizarCarrusel();
+    reiniciarIntervalo();
+  }
+
+  function iniciarIntervalo() {
+    intervaloHero = setInterval(() => moverHero(1), 3000);
+  }
+
+  function reiniciarIntervalo() {
+    clearInterval(intervaloHero);
+    iniciarIntervalo();
+  }
+
+  document.getElementById('heroCarousel').addEventListener('mouseenter', () => clearInterval(intervaloHero));
+  document.getElementById('heroCarousel').addEventListener('mouseleave', iniciarIntervalo);
+
+  let startX = 0;
+  document.getElementById('heroCarousel').addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    clearInterval(intervaloHero);
+  });
+  document.getElementById('heroCarousel').addEventListener('touchend', (e) => {
+    const endX = e.changedTouches[0].clientX;
+    const diffX = startX - endX;
+    if (Math.abs(diffX) > 50) moverHero(diffX > 0 ? 1 : -1);
+    setTimeout(iniciarIntervalo, 2000);
+  });
+
+  actualizarCarrusel();
+  iniciarIntervalo();
+
+  // ========== MODAL + CARRITO + CHECKOUT ==========
+  let imagenesCarrusel = [], indiceActual = 0;
+
+  function abrirModal(imagenes, titulo, descripcion, precio) {
+    imagenesCarrusel = imagenes;
+    indiceActual = 0;
+    const track = document.getElementById('carousel-track');
+    track.innerHTML = imagenes.map(src => `<img src="${src}" loading="lazy">`).join('');
+    track.style.transform = 'translateX(0)';
+    document.getElementById('modal-titulo').innerText = titulo;
+    document.getElementById('modal-descripcion').innerText = descripcion;
+    const precioNum = parseFloat(precio.replace('$', '').replace(',', ''));
+    document.getElementById('modalActions').innerHTML = `
+      <div class="price">${precio}</div>
+      <div class="modal-actions">
+        <button class="btn-add-cart" onclick="agregarAlCarrito('${titulo}', ${precioNum}, '${imagenes[0]}')">
+          <i class="fas fa-cart-plus"></i> Agregar al Carrito
+        </button>
+        <button class="btn-pagar-ahora" onclick="mostrarCheckoutFalso('${titulo}', ${precioNum})">
+          <i class="fas fa-bolt"></i> Comprar Ahora
+        </button>
+        <a href="https://wa.me/${numeroWhatsApp}?text=¡Hola!%20Quiero%20el%20*${encodeURIComponent(titulo)}*%20por%20${precio}" class="btn-whatsapp" target="_blank" rel="noopener">
+          <i class="fab fa-whatsapp"></i> Preguntar
+        </a>
+      </div>
+    `;
+    document.getElementById('modal').style.display = 'block';
+    document.getElementById('checkoutForm').style.display = 'none';
+    document.getElementById('confirmacionPedido').style.display = 'none';
+  }
+
+  function cerrarModal() { document.getElementById('modal').style.display = 'none'; }
+  function moverCarrusel(dir) {
+    indiceActual = (indiceActual + dir + imagenesCarrusel.length) % imagenesCarrusel.length;
+    document.getElementById('carousel-track').style.transform = `translateX(-${indiceActual * 100}%)`;
+  }
+  window.onclick = e => { if (e.target === document.getElementById('modal')) cerrarModal(); }
+
+  function agregarAlCarrito(titulo, precio, imagen) {
+    carrito.push({ titulo, precio, imagen });
+    document.getElementById('cartCount').textContent = carrito.length;
+    document.getElementById('cartCount').style.display = 'flex';
+    mostrarToast('¡Agregado al carrito!');
+  }
+
+  function mostrarToast(mensaje) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastText').textContent = mensaje;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  function mostrarCheckoutFalso(titulo, precio) {
+    document.getElementById('modalActions').style.display = 'none';
+    const form = document.getElementById('checkoutForm');
+    form.style.display = 'block';
+    form.querySelector('h3').innerHTML = `Pagar: <strong>${titulo}</strong> - $${precio}`;
+  }
+
+  function volverAlModal() {
+    document.getElementById('checkoutForm').style.display = 'none';
+    document.getElementById('modalActions').style.display = 'block';
+  }
+
+  document.getElementById('tarjetaNumero').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+    let parts = [];
+    for (let i = 0; i < v.length; i += 4) parts.push(v.substring(i, i + 4));
+    e.target.value = parts.join(' ').substring(0, 19);
+  });
+  document.getElementById('tarjetaMes').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').substring(0, 2);
+    if (v && parseInt(v) > 12) v = '12';
+    e.target.value = v;
+  });
+  document.getElementById('tarjetaAnio').addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/\D/g, '').substring(0, 2);
+  });
+
+  function procesarPagoFalso() {
+    const inputs = ['nombreCliente','telefonoCliente','direccionCliente','tarjetaNumero','tarjetaMes','tarjetaAnio','tarjetaCVV'];
+    if (inputs.some(id => !document.getElementById(id).value.trim())) {
+      mostrarToast('¡Completa todos los campos!');
+      return;
+    }
+    const btn = document.querySelector('.btn-pagar-falso');
+    btn.innerHTML = 'Spinner Procesando...';
+    btn.disabled = true;
+    setTimeout(() => {
+      const titulo = document.getElementById('modal-titulo').innerText;
+      const precio = document.querySelector('#modal-precio .price').innerText;
+      const data = {
+        nombre: document.getElementById('nombreCliente').value,
+        tel: document.getElementById('telefonoCliente').value,
+        dir: document.getElementById('direccionCliente').value,
+        tarjeta: document.getElementById('tarjetaNumero').value.replace(/\s/g, '').slice(-4),
+        exp: `${document.getElementById('tarjetaMes').value}/${document.getElementById('tarjetaAnio').value}`
+      };
+      const mensaje = `*¡NUEVO PEDIDO!*%0A*Producto:* ${titulo}%0A*Precio:* ${precio}%0A%0A*Cliente:* ${data.nombre}%0A*Tel:* ${data.tel}%0A*Dirección:* ${data.dir}%0A%0A*Tarjeta:* ${data.tarjeta}** (ficticia)%0A*Exp:* ${data.exp}%0A*CVV:* ***%0A%0A*Nota: Pago simulado*`;
+      window.open(`https://wa.me/${numeroWhatsApp}?text=${mensaje}`, '_blank');
+      document.getElementById('checkoutForm').style.display = 'none';
+      document.getElementById('confirmacionPedido').style.display = 'block';
+    }, 2000);
+  }
+</script>
+</body>
+</html>
